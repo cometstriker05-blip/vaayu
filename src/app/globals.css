@@ -1,26 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600;1,9..144,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=Syne:wght@400;600;700;800&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-navy:          #0D2137;
+  --color-navy-light:    #152E4A;
+  --color-teal:          #2AABC3;
+  --color-teal-deep:     #1A8A9E;
+  --color-mist:          #FAF9F7;
+  --color-sand:          #F4EDE3;
+  --color-sand-dark:     #E5D8C8;
+  --color-terracotta:    #C4622D;
+  --color-terracotta-light: #D97A4A;
+  --color-gold:          #E8A838;
+  --color-earth:         #2D6A4F;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-sans:    'DM Sans', system-ui, sans-serif;
+  --font-label:   'Syne', system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  background-color: var(--color-mist);
+  color: var(--color-navy);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scroll-triggered fade-up */
+.fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-up.delay-1 { transition-delay: 0.1s; }
+.fade-up.delay-2 { transition-delay: 0.2s; }
+.fade-up.delay-3 { transition-delay: 0.3s; }
+.fade-up.delay-4 { transition-delay: 0.4s; }
+.fade-up.delay-5 { transition-delay: 0.5s; }
+.fade-up.delay-6 { transition-delay: 0.6s; }
+.fade-up.delay-7 { transition-delay: 0.7s; }
+.fade-up.delay-8 { transition-delay: 0.8s; }
+
+/* Wave animation */
+@keyframes wave-drift {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(-3%); }
+  100% { transform: translateX(0); }
+}
+.wave-anim {
+  animation: wave-drift 8s ease-in-out infinite;
+}
+.wave-anim-2 {
+  animation: wave-drift 12s ease-in-out infinite reverse;
+  opacity: 0.5;
+}
+
+/* Hero animations */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-badge { animation: fade-in-up 0.9s ease 0s both; }
+.hero-title { animation: fade-in-up 1s ease 0.25s both; }
+.hero-sub   { animation: fade-in-up 1s ease 0.5s both; }
+.hero-ctas  { animation: fade-in-up 1s ease 0.75s both; }
+
+/* Nav blur */
+.nav-glass {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Arrow reveal on button hover */
+.btn-arrow-group .btn-arrow {
+  display: inline-block;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.btn-arrow-group:hover .btn-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Underline slide — used on nav links and Why Vaayu verbs */
+.underline-slide {
+  position: relative;
+}
+.underline-slide::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.underline-slide:hover::after,
+.group:hover .underline-slide::after {
+  transform: scaleX(1);
+}
+
+/* Button pulse */
+@keyframes pulse-teal {
+  0%   { box-shadow: 0 0 0 0   rgba(42,171,195,0.45); }
+  70%  { box-shadow: 0 0 0 10px rgba(42,171,195,0);   }
+  100% { box-shadow: 0 0 0 0   rgba(42,171,195,0);    }
+}
+.btn-pulse:hover {
+  animation: pulse-teal 1.1s ease infinite;
+}
+
+/* Left border slide for feature cards */
+.card-border-slide {
+  position: relative;
+  overflow: hidden;
+}
+.card-border-slide::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 3px;
+  height: 0;
+  background: #2AABC3;
+  transition: height 0.35s ease;
+  border-radius: 0 0 0 16px;
+}
+.card-border-slide:hover::before {
+  height: 100%;
+}
+
+/* Top border slide for impact cards */
+.card-top-border {
+  position: relative;
+}
+.card-top-border::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  border-radius: 16px 16px 0 0;
+  background: var(--accent, #2AABC3);
+  transition: width 0.35s ease;
+}
+.card-top-border:hover::after {
+  width: 100%;
 }
