@@ -25,6 +25,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 88px;
 }
 
 body {
@@ -34,6 +35,18 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Text selection */
+::selection {
+  background: var(--color-teal);
+  color: white;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--color-mist); }
+::-webkit-scrollbar-thumb { background: var(--color-navy); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-teal); }
 
 /* Scroll-triggered fade-up */
 .fade-up {
@@ -73,10 +86,29 @@ body {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.hero-badge { animation: fade-in-up 0.9s ease 0s both; }
-.hero-title { animation: fade-in-up 1s ease 0.25s both; }
-.hero-sub   { animation: fade-in-up 1s ease 0.5s both; }
-.hero-ctas  { animation: fade-in-up 1s ease 0.75s both; }
+.hero-badge { animation: fade-in-up 0.9s ease 1.05s both; }
+.hero-sub   { animation: fade-in-up 1s ease 1.55s both; }
+.hero-ctas  { animation: fade-in-up 1s ease 1.75s both; }
+
+/* Hero letter reveal — rises with blur, staggered per letter */
+@keyframes letter-rise {
+  from { opacity: 0; transform: translateY(0.4em) rotate(3deg); filter: blur(10px); }
+  to   { opacity: 1; transform: translateY(0) rotate(0); filter: blur(0); }
+}
+.hero-letter {
+  display: inline-block;
+  animation: letter-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Ken Burns slow zoom on hero photo */
+@keyframes ken-burns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.12); }
+}
+.ken-burns {
+  animation: ken-burns 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
 
 /* Nav blur */
 .nav-glass {
@@ -164,4 +196,123 @@ body {
 }
 .card-top-border:hover::after {
   width: 100%;
+}
+
+/* ── Preloader ── */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--color-navy);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.preloader.exit {
+  transform: translateY(-100%);
+}
+@keyframes preloader-logo-in {
+  from { opacity: 0; transform: translateY(18px) scale(0.92); filter: blur(6px) brightness(0) invert(1); }
+  to   { opacity: 1; transform: none; filter: blur(0) brightness(0) invert(1); }
+}
+.preloader-logo {
+  animation: preloader-logo-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+.preloader-bar {
+  width: 160px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  overflow: hidden;
+}
+@keyframes preloader-fill {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+.preloader-bar > span {
+  display: block;
+  height: 100%;
+  background: var(--color-teal);
+  animation: preloader-fill 1.15s ease 0.2s both;
+}
+
+/* ── Custom cursor ring ── */
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border: 1.5px solid rgba(42, 171, 195, 0.65);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 95;
+  opacity: 0;
+  transition: width 0.25s ease, height 0.25s ease, margin 0.25s ease,
+              background 0.25s ease, opacity 0.3s ease;
+}
+.cursor-ring.active { opacity: 1; }
+.cursor-ring.hovering {
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  background: rgba(42, 171, 195, 0.12);
+}
+@media (pointer: coarse) {
+  .cursor-ring { display: none; }
+}
+
+/* ── Marquee ticker ── */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee-scroll 28s linear infinite;
+  will-change: transform;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ── Film grain overlay ── */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Gentle bob for the fisherman scene ── */
+@keyframes gentle-bob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-7px) rotate(-0.6deg); }
+}
+.scene-bob {
+  animation: gentle-bob 6s ease-in-out infinite;
+  transform-origin: 50% 60%;
+  transform-box: fill-box;
+}
+
+/* ── Reduced motion — respect user preference ── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .ken-burns,
+  .marquee-track,
+  .hero-letter,
+  .hero-badge, .hero-sub, .hero-ctas,
+  .wave-anim, .wave-anim-2,
+  .preloader-logo,
+  .scene-bob,
+  .btn-pulse:hover {
+    animation: none !important;
+  }
+  .cursor-ring { display: none; }
 }

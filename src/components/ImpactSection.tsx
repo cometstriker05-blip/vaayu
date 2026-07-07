@@ -1,5 +1,6 @@
 "use client";
 import { useInView } from "@/hooks/useInView";
+import CountUp from "./CountUp";
 
 const stats = [
   { value: "4M+",   label: "Fishermen in India",   sub: "in coastal districts",         color: "#2AABC3" },
@@ -55,7 +56,7 @@ export default function ImpactSection() {
                   color: s.color,
                 }}
               >
-                {s.value}
+                <CountUp value={s.value} start={inView} />
               </p>
               <p
                 className="text-navy text-sm font-semibold tracking-wide mt-3 mb-1"

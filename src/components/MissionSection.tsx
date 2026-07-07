@@ -1,10 +1,11 @@
 "use client";
 import { useInView } from "@/hooks/useInView";
+import FishermanScene from "./FishermanScene";
 
 const reasons = [
   {
     verb: "Navigate",
-    rest: "safely.",
+    rest: " safely.",
     body: "Real-time cyclone routing, hyperlocal weather, and offline SOS — so every decision on open water has the best data behind it.",
     num: "01",
   },
@@ -72,40 +73,64 @@ export default function MissionSection() {
 
         <div className="max-w-7xl mx-auto relative z-10">
 
-          {/* Opening statement */}
-          <div className={`fade-up ${inView ? "visible" : ""} mb-20`}>
-            <p
-              className="text-teal text-xs tracking-[0.5em] uppercase mb-8 font-semibold"
-              style={{ fontFamily: "var(--font-label)" }}
-            >
-              Why Vaayu
-            </p>
+          {/* Opening statement + fisherman scene */}
+          <div className="grid lg:grid-cols-[1fr_380px] gap-12 lg:gap-20 items-center mb-20">
+            <div className={`fade-up ${inView ? "visible" : ""}`}>
+              <p
+                className="text-teal text-xs tracking-[0.5em] uppercase mb-8 font-semibold"
+                style={{ fontFamily: "var(--font-label)" }}
+              >
+                Why Vaayu
+              </p>
 
-            <h2
-              className="text-white leading-tight mb-6 max-w-3xl"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(36px, 6vw, 76px)",
-                fontWeight: 700,
-                letterSpacing: "-0.02em",
-              }}
-            >
-              Every decision
-              <br />
-              <em className="text-teal" style={{ fontWeight: 300 }}>
-                at sea matters.
-              </em>
-            </h2>
+              <h2
+                className="text-white leading-tight mb-6 max-w-3xl"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(36px, 6vw, 76px)",
+                  fontWeight: 700,
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                Every decision
+                <br />
+                <em className="text-teal" style={{ fontWeight: 300 }}>
+                  at sea matters.
+                </em>
+              </h2>
 
-            <p
-              className="text-white/45 max-w-xl text-base leading-relaxed"
-              style={{ fontFamily: "var(--font-sans)" }}
+              <p
+                className="text-white/45 max-w-xl text-base leading-relaxed"
+                style={{ fontFamily: "var(--font-sans)" }}
+              >
+                At 3 AM, 40 km from shore, with weather closing in — there's no
+                time for guesswork. Vaayu brings ocean intelligence, predictive
+                analytics, and real-time insights into one platform built for the
+                people who need it most.
+              </p>
+            </div>
+
+            {/* Fisherman at sunset — illustrated scene */}
+            <div
+              className={`fade-up delay-2 ${inView ? "visible" : ""}
+                relative rounded-3xl overflow-hidden border border-white/10
+                h-[340px] lg:h-[460px] shadow-2xl shadow-black/30`}
             >
-              At 3 AM, 40 km from shore, with weather closing in — there's no
-              time for guesswork. Vaayu brings ocean intelligence, predictive
-              analytics, and real-time insights into one platform built for the
-              people who need it most.
-            </p>
+              <FishermanScene />
+              <div
+                className="absolute inset-x-0 bottom-0 pt-16 pb-5 px-6 text-center"
+                style={{
+                  background: "linear-gradient(to top, rgba(10,24,38,0.85), transparent)",
+                }}
+              >
+                <p
+                  className="text-white/60 text-sm italic"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  The sea remembers those who respect it.
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Three reasons — horizontal manifesto rows */}

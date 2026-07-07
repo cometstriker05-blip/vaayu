@@ -1,69 +1,69 @@
 "use client";
 import {
-  Cloud, AlertTriangle, Navigation2, ShieldCheck,
-  Fish, TrendingUp, Users, Mic, WifiOff,
-} from "lucide-react";
+  WeatherIcon, CycloneIcon, CompassIcon, LifebuoyIcon,
+  FishIcon, MarketIcon, FleetIcon, VoiceIcon, SyncIcon,
+} from "./FeatureIcons";
 import { useInView } from "@/hooks/useInView";
 
 const features = [
   {
-    icon: Cloud,
+    icon: WeatherIcon,
     category: "Weather",
     title: "Hyper-Local Ocean & Weather Data",
     body: "Wind, currents, tides, and wave height updated on request. District-level Potential Fishing Zones from satellite data — precise enough to change your route, not just your plan.",
     accent: "#2AABC3",
   },
   {
-    icon: AlertTriangle,
+    icon: CycloneIcon,
     category: "Safety",
     title: "Cyclone & Severe Weather Alerts",
     body: "Push notifications in local languages. Map overlays for cyclones, gales, and heavy rain. AI-driven cyclone escape routing that adjusts in real time as the storm moves.",
     accent: "#C4622D",
   },
   {
-    icon: Navigation2,
+    icon: CompassIcon,
     category: "Navigation",
     title: "Smart Navigation & Route Planning",
     body: "GPS compass with nautical charts. Fuel planner with eco-efficient routes calculated using live satellite current and wind maps — reducing fuel costs and emissions together.",
     accent: "#2D6A4F",
   },
   {
-    icon: ShieldCheck,
+    icon: LifebuoyIcon,
     category: "Emergency",
     title: "Safety & Emergency Response",
     body: "One-tap SOS to Coast Guard, authorities, and emergency contacts. Group safety alerts broadcast to nearby boats. Crisis messaging that works even at the edge of coverage.",
     accent: "#C4622D",
   },
   {
-    icon: Fish,
+    icon: FishIcon,
     category: "Intelligence",
     title: "AI-Based Catch Forecasting",
     body: "Combines live satellite PFZ data with AI models to predict catch volume, species mix, and trip profitability — with full economic risk analysis before you leave harbour.",
     accent: "#E8A838",
   },
   {
-    icon: TrendingUp,
+    icon: MarketIcon,
     category: "Market",
     title: "AI-Powered Market Price Forecast",
     body: "Live market prices from high-demand landing centres. Seasonal, demand, and festival-driven price trend predictions — so you know not just where to fish, but when to sell.",
     accent: "#2D6A4F",
   },
   {
-    icon: Users,
+    icon: FleetIcon,
     category: "Community",
     title: "Community SOS & Group Safety",
     body: "Alert every nearby boat in an emergency. Harbour-based group tracking so families know when fleets return. Offline SOS that queues and auto-sends when signal is found.",
     accent: "#2AABC3",
   },
   {
-    icon: Mic,
+    icon: VoiceIcon,
     category: "Accessibility",
     title: "Multilingual Voice Assistant",
     body: "Ask about weather, log your catch, or report an issue — all by voice. Designed for low-literacy users. Voice-to-text in Tamil, Hindi, Malayalam, Telugu, and Odia.",
     accent: "#2AABC3",
   },
   {
-    icon: WifiOff,
+    icon: SyncIcon,
     category: "Offline",
     title: "Offline Mode with Smart Sync",
     body: "Maps, alerts, PFZ charts, and safety tutorials stored locally. Everything syncs automatically the moment connectivity is restored — no data lost, no missed update.",
@@ -115,17 +115,34 @@ export default function FeaturesSection() {
             return (
               <div
                 key={f.title}
-                className={`fade-up delay-${delay} ${inView ? "visible" : ""}
-                  card-border-slide bg-mist hover:bg-white rounded-2xl p-7 transition-all duration-300 group
-                  border border-sand-dark hover:border-transparent hover:shadow-lg hover:shadow-navy/6`}
+                className={`fade-up delay-${delay} ${inView ? "visible" : ""}`}
+              >
+              <div
+                className="card-border-slide bg-mist hover:bg-white rounded-2xl p-7 group h-full
+                  border border-sand-dark hover:border-transparent hover:shadow-lg hover:shadow-navy/6"
+                style={{
+                  transition:
+                    "transform 0.2s ease-out, background-color 0.3s, border-color 0.3s, box-shadow 0.3s",
+                  willChange: "transform",
+                }}
+                onMouseMove={(e) => {
+                  const el = e.currentTarget;
+                  const r = el.getBoundingClientRect();
+                  const x = (e.clientX - r.left) / r.width - 0.5;
+                  const y = (e.clientY - r.top) / r.height - 0.5;
+                  el.style.transform = `perspective(900px) rotateX(${(-y * 5).toFixed(2)}deg) rotateY(${(x * 5).toFixed(2)}deg) translateY(-2px)`;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "";
+                }}
               >
                 {/* Icon + category */}
                 <div className="flex items-center gap-3 mb-5">
                   <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-110"
+                    className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-110"
                     style={{ backgroundColor: f.accent + "18" }}
                   >
-                    <Icon size={18} style={{ color: f.accent }} />
+                    <Icon size={22} color={f.accent} />
                   </div>
                   <span
                     className="text-xs tracking-[0.25em] uppercase font-semibold"
@@ -145,6 +162,7 @@ export default function FeaturesSection() {
 
                 {/* Body */}
                 <p className="text-navy/50 text-sm leading-relaxed">{f.body}</p>
+              </div>
               </div>
             );
           })}
