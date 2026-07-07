@@ -34,10 +34,10 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
 
-      {/* Background photo — Ken Burns zoom inside a parallax wrapper */}
+      {/* Background photo — parallax wrapper */}
       <div ref={bgRef} className="absolute -inset-y-10 inset-x-0">
         <div
-          className="ken-burns absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/hero-beach.png')" }}
         />
       </div>

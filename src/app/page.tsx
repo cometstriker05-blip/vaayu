@@ -4,7 +4,6 @@ import CustomCursor    from "@/components/CustomCursor";
 import Navbar          from "@/components/Navbar";
 import Hero            from "@/components/Hero";
 import ProblemSection  from "@/components/ProblemSection";
-import CoastlineDivider from "@/components/CoastlineDivider";
 import FeaturesSection from "@/components/FeaturesSection";
 import Marquee         from "@/components/Marquee";
 import LanguageSection from "@/components/LanguageSection";
@@ -24,7 +23,6 @@ export default function Home() {
       <main>
         <Hero />
         <ProblemSection />
-        <CoastlineDivider />
         <FeaturesSection />
         <Marquee />
         <LanguageSection />
